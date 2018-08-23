@@ -154,6 +154,7 @@ var draw = (function(){
         //Draw a rectange
         drawRect: function(){
             ctx.fillStyle = this.randColor();
+            ctx.strokeStyle = this.randColor();
             ctx.fillRect(x1,y1, (x2-x1),(y2-y1));
         },
 
