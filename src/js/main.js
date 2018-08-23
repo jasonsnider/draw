@@ -42,8 +42,10 @@ var draw = (function(){
 
     //fill color
     var fill='';
-    
 
+    //3 point variables
+    var points = [];
+    var i = 0;
 
     return {
 
@@ -114,6 +116,23 @@ var draw = (function(){
             y2=y;
         },
 
+        //Draw a three point triangle
+        setPoint: function(){
+
+            points[i]=[];
+            points[i]['x']=x;
+            points[i]['y']=y;
+
+            if(points.length>2){
+                this.draw();
+                i=0;
+                points=[];
+            }else{
+                i++;
+            }
+            
+        },
+
         //set the x,y based on event data
         setXY: function(evt){
 
@@ -148,6 +167,9 @@ var draw = (function(){
                 case 'path':
                     this.drawPath();
                     break;
+                case '3-point':
+                    this.draw3Point();;
+                    break;
                 case 'triangle':
                     this.drawTriangle();
                     break;
@@ -156,6 +178,23 @@ var draw = (function(){
                     break;
             }
             ctx.save();
+        },
+
+        //Draw a triangle
+        draw3Point: function(){
+
+            ctx.fillStyle = this.getFillColor();
+            ctx.strokeStyle = this.getStrokeColor();
+
+            ctx.beginPath();
+
+            ctx.moveTo(points[0]['x'], points[0]['y']);
+            ctx.lineTo(points[1]['x'], points[1]['y']);
+            ctx.lineTo(points[2]['x'], points[2]['y']);
+            ctx.lineTo(points[0]['x'], points[0]['y']);
+
+            ctx.stroke();
+            ctx.fill();
         },
 
         //Draw Path
@@ -276,17 +315,32 @@ document.getElementById('btnLine').addEventListener('click',function(){
     draw.setShape('line');
 });
 
+//Draw a three point triangle
+document.getElementById('btn3Point').addEventListener('click', function(){
+    draw.setShape('3-point');
+});
+
 //Get the starting position
 draw.getCanvas().addEventListener('mousedown', function(){
-    draw.setStart();
-    draw.setIsDrawing(true);
+    if(draw.getShape()!=='3-point'){
+        draw.setStart();
+        draw.setIsDrawing(true);
+    }
 });
 
 //Get the ending position
 draw.getCanvas().addEventListener('mouseup', function(){
-    draw.setEnd();
-    draw.draw();
-    draw.setIsDrawing(false);
+
+    if(draw.getShape()!=='3-point'){
+        draw.setEnd();
+        draw.draw();
+        draw.setIsDrawing(false);
+    }
+
+
+    if(draw.getShape()==='3-point'){
+        draw.setPoint();
+    }
 });
 
 //Track the x,y position
