@@ -111,6 +111,9 @@ var draw = (function(){
                 case 'path':
                     this.drawPath();
                     break;
+                case 'triangle':
+                    this.drawTriangle();
+                    break;
                 default:
                     alert('Please choose a shape');
                     break;
@@ -151,6 +154,46 @@ var draw = (function(){
             ctx.stroke();
         },
 
+        //Draw Triangle
+        //Draw a triangle
+        drawTriangle: function(){
+
+            //x1,y1 to x2,y2 is the first line
+            //we will use the first point +/- 
+            //(depending on the direction of
+            //the mouse movement) the result of 
+            //PT to add a third point. 
+            var a = (x1-x2);
+            var b = (y1-y2);
+            var c = Math.sqrt(a*a + b*b);
+
+            var d = x1+c;
+            var e = y1+c;
+
+            //Drag left to right
+            if(x1>x2){
+                d=x1-c;
+            }
+
+            //Drag up
+            if(y1>y2){
+                e=y1-c;
+            }
+        
+            ctx.fillStyle = this.randColor();
+            ctx.strokeStyle = this.randColor();
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+
+            ctx.lineTo(d,e);
+            ctx.lineTo(x2, y2);
+
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+            ctx.fill();
+
+        },
+
         //Draw a rectange
         drawRect: function(){
             ctx.fillStyle = this.randColor();
@@ -187,6 +230,10 @@ document.getElementById('btnPath').addEventListener('click',function(){
     draw.setShape('path');
 });
 
+//Draw a triangle
+document.getElementById('btnTriangle').addEventListener('click',function(){
+    draw.setShape('triangle');
+});
 
 //Draw a line
 document.getElementById('btnLine').addEventListener('click',function(){
