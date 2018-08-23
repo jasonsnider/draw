@@ -18,9 +18,10 @@
 
         <ul>
 
-          <li><span id="trackX">X: 0</span></li>
-
-          <li><span id="trackY">Y: 0</span></li>
+          <li class="flex">
+            <div id="trackX">X: 0</div>
+            <div id="trackY">Y: 0</div>
+          </li>
 
           <li><button id="btnRect">Rectangle</button></li>
 
@@ -32,20 +33,20 @@
 
           <li><button id="btnTriangle">Triangle</button></li>
           
-          <li>
-            <label for="strokeColor">Stroke</label>
-            <input type="color" id="strokeColor">
-            <br>
-            <input type="checkbox" id="randStrokeColor">
-            <label for="randStrokeColor">Random Stroke</label>
-          </li>
+          <li class="flex">
+            <div>
+                <label for="strokeColor">Stroke</label>
+                <input type="color" id="strokeColor"><br><br>
+                <input type="checkbox" id="randStrokeColor">
+                <label for="randStrokeColor">Random</label>
+            </div>
 
-          <li>
-            <label for="fillColor">Fill</label>
-            <input type="color" id="fillColor">
-            <br>
-            <input type="checkbox" id="randFillColor">
-            <label for="randFillColor">Random Fill</label>
+            <div>
+              <label for="fillColor">Fill</label>
+              <input type="color" id="fillColor"><br><br>
+              <input type="checkbox" id="randFillColor">
+              <label for="randFillColor">Random</label>
+            </div>
           </li>
 
         </ul>
