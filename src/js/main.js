@@ -37,6 +37,13 @@ var draw = (function(){
     //Do we want to draw?
     var isDrawing=false;
 
+    //stroke color
+    var stroke='';
+
+    //fill color
+    var fill='';
+    
+
 
     return {
 
@@ -63,6 +70,36 @@ var draw = (function(){
         //Set a random color
         randColor: function(){
             return '#' + Math.floor(Math.random()*16777215).toString(16);
+        },
+
+        //A setter for stroke
+        setStrokeColor: function(color){
+            stroke = color;
+        },
+
+        //A setter for fill
+        setFillColor: function(color){
+            fill = color;
+        },
+
+        //A getter for stroke
+        getStrokeColor: function(){
+
+            if(stroke.length > 6){
+                return stroke;
+            }
+
+            return this.randColor();
+        },
+
+        //A getter for fill
+        getFillColor: function(){
+
+            if(fill.length > 6){
+                return fill;
+            }
+
+            return this.randColor();
         },
 
         //set starting x,y (mousedown)
@@ -123,7 +160,7 @@ var draw = (function(){
 
         //Draw Path
         drawPath: function(){
-            ctx.strokeStyle = this.randColor();
+            ctx.strokeStyle = this.getStrokeColor();
             ctx.beginPath();
             ctx.moveTo(lx, ly);
             ctx.lineTo(x, y);
@@ -132,8 +169,8 @@ var draw = (function(){
 
         //Draw Circle
         drawCircle: function(){
-            ctx.strokeStyle = this.randColor();
-            ctx.fillStyle = this.randColor();
+            ctx.strokeStyle = this.getStrokeColor();
+            ctx.fillStyle = this.getFillColor();
 
             var a = (x1-x2);
             var b = (y1-y2);
@@ -147,14 +184,13 @@ var draw = (function(){
 
         //Draw Line
         drawLine: function(){
-            ctx.strokeStyle = this.randColor();
+            ctx.strokeStyle = this.getStrokeColor();
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.stroke();
         },
 
-        //Draw Triangle
         //Draw a triangle
         drawTriangle: function(){
 
@@ -180,8 +216,8 @@ var draw = (function(){
                 e=y1-c;
             }
         
-            ctx.fillStyle = this.randColor();
-            ctx.strokeStyle = this.randColor();
+            ctx.fillStyle = this.getFillColor();
+            ctx.strokeStyle = this.getStrokeColor();
             ctx.beginPath();
             ctx.moveTo(x1, y1);
 
@@ -196,8 +232,8 @@ var draw = (function(){
 
         //Draw a rectange
         drawRect: function(){
-            ctx.fillStyle = this.randColor();
-            ctx.strokeStyle = this.randColor();
+            ctx.fillStyle = this.getFillColor();
+            ctx.strokeStyle = this.getStrokeColor();
             ctx.fillRect(x1,y1, (x2-x1),(y2-y1));
         },
 
@@ -262,4 +298,24 @@ draw.getCanvas().addEventListener('mousemove', function(evt){
         draw.draw();
     }
     
+});
+
+document.getElementById('strokeColor').addEventListener('change', function(){
+    draw.setStrokeColor(document.getElementById('strokeColor').value);
+});
+
+document.getElementById('randStrokeColor').addEventListener('change', function(){
+    draw.setStrokeColor('');
+});
+
+document.getElementById('fillColor').addEventListener('change', function(){
+    draw.setFillColor(document.getElementById('fillColor').value);
+});
+
+document.getElementById('randFillColor').addEventListener('change', function(){
+    draw.setFillColor('');
+});
+
+document.getElementById('btnClear').addEventListener('click', function(){
+    draw.clear();
 });
