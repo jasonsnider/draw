@@ -315,7 +315,3 @@ document.getElementById('fillColor').addEventListener('change', function(){
 document.getElementById('randFillColor').addEventListener('change', function(){
     draw.setFillColor('');
 });
-
-document.getElementById('btnClear').addEventListener('click', function(){
-    draw.clear();
-});
